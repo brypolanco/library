@@ -18,7 +18,7 @@ function addBookToLibrary() {
   const aBook = new Book(title, author, pages, read);
   myLibrary.push(aBook);
 
-  console.log(aBook);
+  console.log(myLibrary);
 }
 
 //Placeholder books
@@ -35,12 +35,14 @@ loopArray();
 
 function loopArray(){
     myLibrary.forEach(book=>{
-        let i = 0;
-        let bookDisplay = document.createElement('div');
-        bookDisplay.textContent = book.info;
-        bookContainer.appendChild(bookDisplay).id = `book${i}`;
-        i++
+        addBookToDOM(book);
     });
+}
+
+function addBookToDOM(book){
+    let bookDisplay = document.createElement('div');
+    bookDisplay.textContent = book.info;
+    bookContainer.appendChild(bookDisplay).id = 'book';
 }
 
 const newButton = document.createElement('button');
@@ -48,4 +50,7 @@ newButton.textContent = 'New Book';
 newButton.id = 'new-book'
 document.body.prepend(newButton);
 
-newButton.addEventListener('click', addBookToLibrary);
+newButton.addEventListener('click', ()=>{
+    addBookToLibrary();
+    addBookToDOM(myLibrary[myLibrary.length-1])
+});
