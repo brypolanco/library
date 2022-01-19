@@ -34,15 +34,29 @@ document.body.appendChild(bookContainer);
 loopArray();
 
 function loopArray(){
-    myLibrary.forEach(book=>{
-        addBookToDOM(book);
+    myLibrary.forEach((book, index)=>{
+        console.log(`${index}`)
+        addBookToDOM(book,index);
     });
 }
 
-function addBookToDOM(book){
+function addBookToDOM(addBook, arrayNum){
     let bookDisplay = document.createElement('div');
-    bookDisplay.textContent = book.info;
-    bookContainer.appendChild(bookDisplay).id = 'book';
+    bookDisplay.textContent = addBook.info;
+    bookContainer.appendChild(bookDisplay).className = `book`;
+    removeBook(bookDisplay, arrayNum);
+}
+
+function removeBook(rmvBook, arrayNum){
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    rmvBook.appendChild(removeButton).className = 'remove-book';
+    removeButton.addEventListener('click',()=>{
+        rmvBook.textContent = null;
+        myLibrary.splice(arrayNum,1);
+        console.log(myLibrary);
+    });
+
 }
 
 const newButton = document.createElement('button');
@@ -52,5 +66,5 @@ document.body.prepend(newButton);
 
 newButton.addEventListener('click', ()=>{
     addBookToLibrary();
-    addBookToDOM(myLibrary[myLibrary.length-1])
+    addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1)
 });
