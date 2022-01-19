@@ -45,6 +45,7 @@ function addBookToDOM(addBook, arrayNum){
     bookDisplay.textContent = addBook.info;
     bookContainer.appendChild(bookDisplay).className = `book`;
     removeBook(bookDisplay, arrayNum);
+    readBook(bookDisplay, arrayNum, addBook);
 }
 
 function removeBook(rmvBook, arrayNum){
@@ -57,6 +58,26 @@ function removeBook(rmvBook, arrayNum){
         console.log(myLibrary);
     });
 
+}
+
+function readBook(rdBook, arrayNum, bookObj){
+    const readButton = document.createElement('button');
+    readButton.textContent = 'Read';
+    rdBook.appendChild(readButton).id='read-button';
+    readButton.addEventListener('click',()=>{
+        if(bookObj.read==='Yes'){
+            bookObj.read = 'No';
+            rdBook.textContent = bookObj.info;
+        }
+        else if(bookObj.read==='No'){
+            bookObj.read = 'Yes';
+            rdBook.textContent = bookObj.info;
+        }
+        else{
+            alert('Delete book and put yes or no if you read the book');
+        }
+        console.log(rdBook);
+    });
 }
 
 const newButton = document.createElement('button');
