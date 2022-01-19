@@ -27,8 +27,6 @@ const Book2 = new Book('The Great Gatsby','F. Scott Fitzgerald',208,'Yes');
 myLibrary.push(Book1);
 myLibrary.push(Book2);
 
-addBookToLibrary();
-
 const bookContainer = document.createElement('div');
 bookContainer.id = 'book-container';
 document.body.appendChild(bookContainer);
@@ -44,3 +42,10 @@ function loopArray(){
         i++
     });
 }
+
+const newButton = document.createElement('button');
+newButton.textContent = 'New Book';
+newButton.id = 'new-book'
+document.body.prepend(newButton);
+
+newButton.addEventListener('click', addBookToLibrary);
