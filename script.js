@@ -45,6 +45,7 @@ function addBookToDOM(addBook, arrayNum){
     let bookDisplay = document.createElement('div');
     bookDisplay.textContent = addBook.info;
     bookContainer.appendChild(bookDisplay).className = `book`;
+    
     readBook(bookDisplay, arrayNum);
     removeBook(bookDisplay, arrayNum);
 }
@@ -79,12 +80,14 @@ readBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
     if(myLibrary[index].read==='Yes'){
         myLibrary[index].read = 'No';
         myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
-        btn.parentElement.textContent = myLibrary[index].info;
+        btn.parentElement.textContent = '';
+        addBookToDOM(myLibrary[index], index)
     }
     else if(myLibrary[index].read==='No'){
         myLibrary[index].read = 'Yes';
         myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
-        btn.parentElement.textContent = myLibrary[index].info;
+        btn.parentElement.textContent = '';
+        addBookToDOM(myLibrary[index], index)
     }
     else{
         alert('Delete book and put yes or no if you read the book');
