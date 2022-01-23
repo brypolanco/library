@@ -77,12 +77,34 @@ function removeButton(bookDisplay, arrayNum){
 newButton.addEventListener('click', ()=>{
     addBookToLibrary();
     let displayContent = addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
-    let rdBtn = readButton(displayContent, myLibrary.length-1);
-    readButtons.push(rdBtn);
-    let rmvBtn = removeButton(displayContent, myLibrary.length-1);
-    removeButtons.push(rmvBtn);
+    readButton(displayContent, myLibrary.length-1);
+    removeButton(displayContent, myLibrary.length-1);
 });
 
+
+document.querySelectorAll('.read-book').forEach((btn, index) => btn.addEventListener('click',()=>{
+    if(myLibrary[index].read==='Yes'){
+        myLibrary[index].read = 'No';
+    }
+    else if(myLibrary[index].read==='No'){
+        myLibrary[index].read = 'Yes';
+    }
+    else{
+        alert('Delete book and put yes or no if you read the book');
+    }
+    myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
+    myLibrary[index].domtext.textContent = myLibrary[index].info;
+    console.table(myLibrary);
+}));
+
+
+document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
+    btn.parentElement.remove();
+    myLibrary.splice(index,1);
+    console.log(myLibrary);
+}));
+
+/*
 let readButtons = Array.from(document.querySelectorAll('.read-book'));
 readButtons.forEach((btn, index) => btn.addEventListener('click',()=>{
     if(myLibrary[index].read==='Yes'){
@@ -108,3 +130,4 @@ let removeButtons = Array.from(document.querySelectorAll('.remove-book'));
     console.log(myLibrary);
     console.log(removeButtons);
 }));
+*/
