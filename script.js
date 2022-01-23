@@ -62,14 +62,35 @@ function readButton(bookDisplay, arrayNum){
     const readButton = document.createElement('button');
     readButton.textContent = 'Read';
     bookDisplay.appendChild(readButton).className='read-book';
-    return readButton;
+    
+    document.querySelectorAll('.read-book').forEach((btn, index) => btn.addEventListener('click',()=>{
+        if(myLibrary[index].read==='Yes'){
+            myLibrary[index].read = 'No';
+        }
+        else if(myLibrary[index].read==='No'){
+            myLibrary[index].read = 'Yes';
+        }
+        else{
+            alert('Delete book and put yes or no if you read the book');
+        }
+        myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
+        myLibrary[index].domtext.textContent = myLibrary[index].info;
+        console.table(myLibrary);
+    }));
+    //return readButton;
 }
 
 function removeButton(bookDisplay, arrayNum){
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     bookDisplay.appendChild(removeButton).className = 'remove-book';
-    return removeButton;
+    
+    document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
+        btn.parentElement.remove();
+        myLibrary.splice(index,1);
+        console.log(myLibrary);
+    }));
+    //return removeButton;
 }
 
 
@@ -80,29 +101,6 @@ newButton.addEventListener('click', ()=>{
     readButton(displayContent, myLibrary.length-1);
     removeButton(displayContent, myLibrary.length-1);
 });
-
-
-document.querySelectorAll('.read-book').forEach((btn, index) => btn.addEventListener('click',()=>{
-    if(myLibrary[index].read==='Yes'){
-        myLibrary[index].read = 'No';
-    }
-    else if(myLibrary[index].read==='No'){
-        myLibrary[index].read = 'Yes';
-    }
-    else{
-        alert('Delete book and put yes or no if you read the book');
-    }
-    myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
-    myLibrary[index].domtext.textContent = myLibrary[index].info;
-    console.table(myLibrary);
-}));
-
-
-document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
-    btn.parentElement.remove();
-    myLibrary.splice(index,1);
-    console.log(myLibrary);
-}));
 
 /*
 let readButtons = Array.from(document.querySelectorAll('.read-book'));
