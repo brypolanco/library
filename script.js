@@ -36,8 +36,8 @@ loopArray();
 function loopArray(){
     myLibrary.forEach((book, index)=>{
         let displayContent = addBookToDOM(book,index);
-        readBook(displayContent, index);
-        removeBook(displayContent, index);
+        readButton(displayContent, index);
+        removeButton(displayContent, index);
     });
 }
 
@@ -49,59 +49,62 @@ document.body.prepend(newButton);
 
 function addBookToDOM(addBook, arrayNum){
     let bookDisplay = document.createElement('div');
-    bookDisplay.textContent = addBook.info;
     bookContainer.appendChild(bookDisplay).className = `book`;
+    let bookText = document.createElement('div');
+    bookText.textContent = addBook.info;
+    bookDisplay.appendChild(bookText).className = 'text';
+
+    addBook.domtext = bookText;
     return bookDisplay;
 }
 
-function readBook(rdBook, arrayNum){
+function readButton(bookDisplay, arrayNum){
     const readButton = document.createElement('button');
     readButton.textContent = 'Read';
-    rdBook.appendChild(readButton).className='read-book';
+    bookDisplay.appendChild(readButton).className='read-book';
+    return readButton;
 }
 
-function removeBook(rmvBook, arrayNum){
+function removeButton(bookDisplay, arrayNum){
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
-    rmvBook.appendChild(removeButton).className = 'remove-book';
+    bookDisplay.appendChild(removeButton).className = 'remove-book';
+    return removeButton;
 }
 
 
 //Event Listeners
-/*
-let removeBtnArray = Array.from(document.querySelectorAll('.remove-book'));
-removeBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
-    btn.parentElement.textContent = null;
-    myLibrary.splice(index,1);
-    console.log(myLibrary);
-}));
-*/
+newButton.addEventListener('click', ()=>{
+    addBookToLibrary();
+    let displayContent = addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
+    let rdBtn = readButton(displayContent, myLibrary.length-1);
+    readButtons.push(rdBtn);
+    let rmvBtn = removeButton(displayContent, myLibrary.length-1);
+    removeButtons.push(rmvBtn);
+});
 
-/*
-let readBtnArray = Array.from(document.querySelectorAll('.read-book'));
-readBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
+let readButtons = Array.from(document.querySelectorAll('.read-book'));
+readButtons.forEach((btn, index) => btn.addEventListener('click',()=>{
     if(myLibrary[index].read==='Yes'){
         myLibrary[index].read = 'No';
-        myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
-        btn.parentElement.textContent = '';
-        addBookToDOM(myLibrary[index], index)
     }
     else if(myLibrary[index].read==='No'){
         myLibrary[index].read = 'Yes';
-        myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
-        btn.parentElement.textContent = '';
-        addBookToDOM(myLibrary[index], index)
     }
     else{
         alert('Delete book and put yes or no if you read the book');
     }
+    myLibrary[index].info = `${myLibrary[index].title} by ${myLibrary[index].author}, ${myLibrary[index].pages} pages, Read: ${myLibrary[index].read}`;
+    myLibrary[index].domtext.textContent = myLibrary[index].info;
     console.table(myLibrary);
 }));
-*/
 
-newButton.addEventListener('click', ()=>{
-    addBookToLibrary();
-    let displayContent = addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
-    readBook(displayContent, myLibrary.length-1);
-    removeBook(displayContent, myLibrary.length-1);
-});
+let removeButtons = Array.from(document.querySelectorAll('.remove-book'));
+    removeButtons.forEach((btn, index) => btn.addEventListener('click',()=>{
+    btn.parentElement.remove();
+    myLibrary.splice(index,1);
+    removeButtons.splice(index,1);
+    readButtons.splice(index,1);
+    console.log(myLibrary);
+    console.log(removeButtons);
+}));
