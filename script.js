@@ -35,25 +35,23 @@ loopArray();
 
 function loopArray(){
     myLibrary.forEach((book, index)=>{
-        console.log(`${index}`)
-        addBookToDOM(book,index);
+        let displayContent = addBookToDOM(book,index);
+        readBook(displayContent, index);
+        removeBook(displayContent, index);
     });
 }
 
 //Add DOM elements
+const newButton = document.createElement('button');
+newButton.textContent = 'New Book';
+newButton.id = 'new-book'
+document.body.prepend(newButton);
+
 function addBookToDOM(addBook, arrayNum){
     let bookDisplay = document.createElement('div');
     bookDisplay.textContent = addBook.info;
     bookContainer.appendChild(bookDisplay).className = `book`;
-    
-    readBook(bookDisplay, arrayNum);
-    removeBook(bookDisplay, arrayNum);
-}
-
-function removeBook(rmvBook, arrayNum){
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    rmvBook.appendChild(removeButton).className = 'remove-book';
+    return bookDisplay;
 }
 
 function readBook(rdBook, arrayNum){
@@ -62,19 +60,24 @@ function readBook(rdBook, arrayNum){
     rdBook.appendChild(readButton).className='read-book';
 }
 
-const newButton = document.createElement('button');
-newButton.textContent = 'New Book';
-newButton.id = 'new-book'
-document.body.prepend(newButton);
+function removeBook(rmvBook, arrayNum){
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    rmvBook.appendChild(removeButton).className = 'remove-book';
+}
+
 
 //Event Listeners
+/*
 let removeBtnArray = Array.from(document.querySelectorAll('.remove-book'));
 removeBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
     btn.parentElement.textContent = null;
     myLibrary.splice(index,1);
     console.log(myLibrary);
 }));
+*/
 
+/*
 let readBtnArray = Array.from(document.querySelectorAll('.read-book'));
 readBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
     if(myLibrary[index].read==='Yes'){
@@ -94,8 +97,11 @@ readBtnArray.forEach((btn, index) => btn.addEventListener('click',()=>{
     }
     console.table(myLibrary);
 }));
+*/
 
 newButton.addEventListener('click', ()=>{
     addBookToLibrary();
-    addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1)
+    let displayContent = addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
+    readBook(displayContent, myLibrary.length-1);
+    removeBook(displayContent, myLibrary.length-1);
 });
