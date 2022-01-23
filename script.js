@@ -35,9 +35,9 @@ loopArray();
 
 function loopArray(){
     myLibrary.forEach((book, index)=>{
-        let displayContent = addBookToDOM(book,index);
-        readButton(displayContent, index);
-        removeButton(displayContent, index);
+        addBookToDOM(book,index);
+        readButton(book, index);
+        removeButton(book, index);
     });
 }
 
@@ -55,13 +55,13 @@ function addBookToDOM(addBook, arrayNum){
     bookDisplay.appendChild(bookText).className = 'text';
 
     addBook.domtext = bookText;
-    return bookDisplay;
+    addBook.dom = bookDisplay;
 }
 
-function readButton(bookDisplay, arrayNum){
-    const readButton = document.createElement('button');
+function readButton(book, arrayNum){
+    let readButton = document.createElement('button');
     readButton.textContent = 'Read';
-    bookDisplay.appendChild(readButton).className='read-book';
+    book.dom.appendChild(readButton).className='read-book';
     
     document.querySelectorAll('.read-book').forEach((btn, index) => btn.addEventListener('click',()=>{
         if(myLibrary[index].read==='Yes'){
@@ -80,10 +80,10 @@ function readButton(bookDisplay, arrayNum){
     //return readButton;
 }
 
-function removeButton(bookDisplay, arrayNum){
-    const removeButton = document.createElement('button');
+function removeButton(book, arrayNum){
+    let removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
-    bookDisplay.appendChild(removeButton).className = 'remove-book';
+    book.dom.appendChild(removeButton).className = 'remove-book';
     
     document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
         btn.parentElement.remove();
@@ -97,9 +97,9 @@ function removeButton(bookDisplay, arrayNum){
 //Event Listeners
 newButton.addEventListener('click', ()=>{
     addBookToLibrary();
-    let displayContent = addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
-    readButton(displayContent, myLibrary.length-1);
-    removeButton(displayContent, myLibrary.length-1);
+    addBookToDOM(myLibrary[myLibrary.length-1],myLibrary.length-1);
+    readButton(myLibrary[myLibrary.length-1], myLibrary.length-1);
+    removeButton(myLibrary[myLibrary.length-1], myLibrary.length-1);
 });
 
 /*
