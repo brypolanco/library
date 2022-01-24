@@ -17,6 +17,7 @@ function addBookToLibrary() {
 
   let aBook = new Book(title, author, pages, read);
   myLibrary.push(aBook);
+  aBook.index = myLibrary[length-1];
 }
 
 
@@ -24,7 +25,9 @@ function addBookToLibrary() {
 let Book1 = new Book('My Hero Academia','Kōhei Horikoshi',212,'No');
 let Book2 = new Book('The Great Gatsby','F. Scott Fitzgerald',208,'Yes');
 myLibrary.push(Book1);
+Book1.index = myLibrary[myLibrary.length-1];
 myLibrary.push(Book2);
+Book2.index = myLibrary[myLibrary.length-1];
 
 const bookContainer = document.createElement('div');
 bookContainer.id = 'book-container';
@@ -62,6 +65,7 @@ function readButton(book){
     let readButton = document.createElement('button');
     readButton.textContent = 'Read';
     book.dom.appendChild(readButton).className='read-book';
+    book.readDom = readButton;
     
     document.querySelectorAll('.read-book').forEach((btn => btn.addEventListener('click',()=>{
         switch(book.read){
@@ -89,6 +93,7 @@ function removeButton(book){
     let removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     book.dom.appendChild(removeButton).className = 'remove-book';
+    book.removeDom = removeButton;
 
     document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
         btn.parentElement.remove();
