@@ -17,7 +17,8 @@ function addBookToLibrary() {
 
   let aBook = new Book(title, author, pages, read);
   myLibrary.push(aBook);
-  aBook.index = myLibrary[length-1];
+  aBook.libraryElement = myLibrary[length-1];
+  aBook.index = myLibrary.indexOf(aBook.libraryElement)
 }
 
 
@@ -25,9 +26,11 @@ function addBookToLibrary() {
 let Book1 = new Book('My Hero Academia','Kōhei Horikoshi',212,'No');
 let Book2 = new Book('The Great Gatsby','F. Scott Fitzgerald',208,'Yes');
 myLibrary.push(Book1);
-Book1.index = myLibrary[myLibrary.length-1];
+Book1.libraryElement = myLibrary[myLibrary.length-1];
+Book1.index = myLibrary.indexOf(Book1.libraryElement)
 myLibrary.push(Book2);
-Book2.index = myLibrary[myLibrary.length-1];
+Book2.libraryElement = myLibrary[myLibrary.length-1];
+Book2.index = myLibrary.indexOf(Book2.libraryElement)
 
 const bookContainer = document.createElement('div');
 bookContainer.id = 'book-container';
@@ -93,8 +96,13 @@ function removeButton(book){
     let removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     book.dom.appendChild(removeButton).className = 'remove-book';
-    book.removeDom = removeButton;
-
+    book.removeDom = removeButton;        
+    book.removeDom.addEventListener('click',()=>{
+        myLibrary.splice(book.index, 1);
+        book.removeDom.parentElement.remove();
+        console.log('index removed: ' + book.index)
+        console.table(myLibrary)
+    });
     
 }
 
@@ -107,15 +115,3 @@ newButton.addEventListener('click', ()=>{
     removeButton(myLibrary[myLibrary.length-1]);
 });
 
-var i = myLibrary.length;
-while (i--){
-    let book = myLibrary[i];
-    
-
-    book.removeDom.addEventListener('click',()=>{
-        myLibrary.splice(i, 1);
-        book.removeDom.parentElement.remove();
-        console.log('index removed: ' + i)
-        console.table(myLibrary)
-    });
-}
