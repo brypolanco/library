@@ -17,8 +17,8 @@ function addBookToLibrary() {
 
   let aBook = new Book(title, author, pages, read);
   myLibrary.push(aBook);
-  aBook.libraryElement = myLibrary[length-1];
-  aBook.index = myLibrary.indexOf(aBook.libraryElement)
+  aBook.libraryElement = myLibrary[myLibrary.length-1];
+  aBook.index = myLibrary.indexOf(aBook.libraryElement);
 }
 
 
@@ -27,10 +27,10 @@ let Book1 = new Book('My Hero Academia','Kōhei Horikoshi',212,'No');
 let Book2 = new Book('The Great Gatsby','F. Scott Fitzgerald',208,'Yes');
 myLibrary.push(Book1);
 Book1.libraryElement = myLibrary[myLibrary.length-1];
-Book1.index = myLibrary.indexOf(Book1.libraryElement)
+Book1.index = myLibrary.indexOf(Book1.libraryElement);
 myLibrary.push(Book2);
 Book2.libraryElement = myLibrary[myLibrary.length-1];
-Book2.index = myLibrary.indexOf(Book2.libraryElement)
+Book2.index = myLibrary.indexOf(Book2.libraryElement);
 
 const bookContainer = document.createElement('div');
 bookContainer.id = 'book-container';
@@ -50,7 +50,7 @@ function loopArray(){
 //Add DOM elements
 const newButton = document.createElement('button');
 newButton.textContent = 'New Book';
-newButton.id = 'new-book'
+newButton.id = 'new-book';
 document.body.prepend(newButton);
 
 function addBookToDOM(addBook){
@@ -87,8 +87,6 @@ function readButton(book){
             default:
                 alert('Delete book and put yes or no if you read the book');
         }
-        
-        console.table(myLibrary)
     });
 }
 
@@ -96,14 +94,17 @@ function removeButton(book){
     let removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
     book.dom.appendChild(removeButton).className = 'remove-book';
-    book.removeDom = removeButton;        
+    book.removeDom = removeButton;
+    
     book.removeDom.addEventListener('click',()=>{
         myLibrary.splice(book.index, 1);
         book.removeDom.parentElement.remove();
-        console.log('index removed: ' + book.index)
-        console.table(myLibrary)
+
+        myLibrary.forEach((book)=>{
+            book.index = myLibrary.indexOf(book.libraryElement);
+        });
+
     });
-    
 }
 
 
@@ -114,4 +115,3 @@ newButton.addEventListener('click', ()=>{
     readButton(myLibrary[myLibrary.length-1]);
     removeButton(myLibrary[myLibrary.length-1]);
 });
-
