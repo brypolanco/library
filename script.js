@@ -67,7 +67,7 @@ function readButton(book){
     book.dom.appendChild(readButton).className='read-book';
     book.readDom = readButton;
     
-    document.querySelectorAll('.read-book').forEach((btn => btn.addEventListener('click',()=>{
+    book.readDom.addEventListener('click',()=>{
         switch(book.read){
             case 'Yes':
                 book.read = 'No';
@@ -86,7 +86,7 @@ function readButton(book){
         }
         
         console.table(myLibrary)
-    })));
+    });
 }
 
 function removeButton(book){
@@ -95,12 +95,7 @@ function removeButton(book){
     book.dom.appendChild(removeButton).className = 'remove-book';
     book.removeDom = removeButton;
 
-    document.querySelectorAll('.remove-book').forEach((btn, index) => btn.addEventListener('click',()=>{
-        btn.parentElement.remove();
-        myLibrary.splice(index, index+1);
-        console.log('index removed: ' + index)
-        console.table(myLibrary)
-    }));
+    
 }
 
 
@@ -112,3 +107,15 @@ newButton.addEventListener('click', ()=>{
     removeButton(myLibrary[myLibrary.length-1]);
 });
 
+var i = myLibrary.length;
+while (i--){
+    let book = myLibrary[i];
+    
+
+    book.removeDom.addEventListener('click',()=>{
+        myLibrary.splice(i, 1);
+        book.removeDom.parentElement.remove();
+        console.log('index removed: ' + i)
+        console.table(myLibrary)
+    });
+}
